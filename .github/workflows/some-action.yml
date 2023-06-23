@@ -1,13 +1,24 @@
 name: some-actions
 
-on: ["push", "pull_request"]
+on
+  push:
+    branches:
+      - 'main'
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   check:
     runs-on: ubuntu-latest
-    name: Get Python
+    name: Get Python and print
     steps:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.9
       - uses: actions/checkout@v3
+      - name: "When pushed on main"
+        if: github.event.review.state != 'approved'
+        run: echo "MAIN"
+      - name: "When approved"
+        if: github.event.review.state == 'approved'
+        run: echo "APPROVED"
