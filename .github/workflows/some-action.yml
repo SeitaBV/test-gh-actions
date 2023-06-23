@@ -1,6 +1,6 @@
 name: some-actions
 
-on
+on:
   push:
     branches:
       - 'main'
