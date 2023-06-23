@@ -1,0 +1,13 @@
+name: some-actions
+
+on: ["push", "pull_request"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Get Python
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - uses: actions/checkout@v3
