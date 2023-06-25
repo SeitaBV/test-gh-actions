@@ -2,21 +2,24 @@ name: some-actions
 
 on:
   push:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types:
+      - opened
+
 
 jobs:
   check:
     runs-on: ubuntu-latest
     name: Get Python and print
     steps:
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v3
-      - name: "When pushed on main"
-        if: github.event.review.state != 'approved'
-        run: echo "MAIN"
-      - name: "When approved"
-        if: github.event.review.state == 'approved'
-        run: echo "APPROVED"
+      - name: "When a push happened"
+        if: github.event_name == 'push'
+        run: echo "PUSH"
+      - name: "When PR opened"
+        if: github.event_name == 'pull_request'
+        run: echo "PR OPENED"
