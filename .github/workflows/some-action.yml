@@ -2,8 +2,10 @@ name: some-actions
 
 on:
   push:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types:
+      - opened
+
 
 jobs:
   check:
@@ -14,9 +16,9 @@ jobs:
         with:
           python-version: 3.9
       - uses: actions/checkout@v3
-      - name: "When pushed on main"
-        if: github.event.review.state != 'approved'
+      - name: "When pushed"
+        if: github.event.name != 'opened'
         run: echo "MAIN"
-      - name: "When approved"
-        if: github.event.review.state == 'approved'
+      - name: "When opened"
+        if: github.event.action == 'opened'
         run: echo "APPROVED"
