@@ -17,9 +17,9 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v3
-      - name: "When pushed"
-        if: github.event.action != 'opened'
+      - name: "When a pushe happened"
+        if: github.event_name == 'push'
         run: echo "MAIN"
-      - name: "When opened"
-        if: github.event.action == 'opened'
+      - name: "When PR opened"
+        if: github.event_name == 'pull_request'
         run: echo "OPENED"
