@@ -16,7 +16,8 @@ jobs:
         with:
           python-version: 3.9
       - uses: actions/checkout@v3
-      - run: echo "Action: $github.event.action"
+      - name: "Test print"
+        run: echo "Action is $github.event.action "
       - name: "When pushed"
         if: github.event.action != 'opened'
         run: echo "MAIN"
