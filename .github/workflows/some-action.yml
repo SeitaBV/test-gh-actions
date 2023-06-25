@@ -12,12 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Get Python and print
     steps:
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v3
-      - name: "Test print"
-        run: echo github.event.action
       - name: "When pushed"
         if: github.event.action != 'opened'
         run: echo "MAIN"
